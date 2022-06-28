@@ -1,4 +1,4 @@
-package ru.myproject.cocktimer
+package ru.myproject.cooktimer
 
 import org.junit.Test
 

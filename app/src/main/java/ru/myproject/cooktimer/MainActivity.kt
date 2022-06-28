@@ -1,8 +1,8 @@
-package ru.myproject.cocktimer
+package ru.myproject.cooktimer
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import ru.myproject.cocktimer.ui.main.MainFragment
+import ru.myproject.cooktimer.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/action_soft"
+    android:title="@string/soft"
+    android:icon="@drawable/ic_soft"/>
+    <item
+    android:id="@+id/action_medium"
+    android:title="@string/medium"
+        android:icon="@drawable/ic_medium"/>
+    <item
+        android:id="@+id/action_rare"
+        android:title="@string/rare"
+        android:icon="@drawable/ic_hard"/>
+</menu>

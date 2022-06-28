@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "CockTimer"
+rootProject.name = "CookTimer"
 include ':app'

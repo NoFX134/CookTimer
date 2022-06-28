@@ -1,4 +1,4 @@
-package ru.myproject.cocktimer
+package ru.myproject.cooktimer
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
