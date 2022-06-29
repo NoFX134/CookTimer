@@ -3,7 +3,10 @@ package ru.myproject.cooktimer.ui.main
 import android.content.res.AssetFileDescriptor
 import android.media.AudioAttributes
 import android.media.SoundPool
+import android.os.Build
 import android.os.CountDownTimer
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,6 +19,15 @@ class MainViewModel : ViewModel() {
     private var timer: CountDownTimer = createTimer(TimerState.Soft)
     private var soundPool: SoundPool? = null
     private var alarm = 0
+    private var vibrator: Vibrator? = null
+    private val vibratorPattern = longArrayOf(
+        960, 125, 85, 125, 690,
+        125, 85, 125, 690,
+        125, 85, 125, 690,
+        125, 85, 125, 690,
+        125, 85, 125, 690
+    )
+    private var vibratorEffect: VibrationEffect? = null
 
     fun initSound(fd: AssetFileDescriptor) {
         val audioAttributes = AudioAttributes.Builder()
@@ -29,6 +41,13 @@ class MainViewModel : ViewModel() {
             .apply { alarm = load(fd, 1) }
     }
 
+    fun initVibrator(vibrator: Vibrator) {
+        this.vibrator = vibrator
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibratorEffect = VibrationEffect.createWaveform(vibratorPattern, -1)
+        }
+    }
+
     private fun createTimer(state: TimerState): CountDownTimer {
         _timerState.value = TimerStateI.Stopped(getTime(state.time))
         return object : CountDownTimer(state.time, 1_000) {
@@ -40,6 +59,13 @@ class MainViewModel : ViewModel() {
                 _timerState.value = TimerStateI.Done
                 if (alarm > 0) {
                     soundPool?.play(alarm, 1f, 1f, 1, 0, 1f)
+                }
+                vibrator?.let { vibrator ->
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibrator.vibrate(vibratorEffect)
+                    } else {
+                        vibrator.vibrate(vibratorPattern, -1)
+                    }
                 }
             }
         }
@@ -61,6 +87,7 @@ class MainViewModel : ViewModel() {
             timer.start()
         }
         soundPool?.stop(alarm)
+        vibrator?.cancel()
     }
 
 
